@@ -23,9 +23,6 @@ As a casual UFC fan, I just wanted to visualize UFC in 2019. I just wanted to fo
 # Packages
 
 ```{r}
-install.packages("ggcharts")
-install.packages("tidyverse")
-install.packages("lubridate")
 library(ggcharts)
 library(tidyverse)
 library(lubridate)
