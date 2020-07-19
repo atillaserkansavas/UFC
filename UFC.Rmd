@@ -1,0 +1,106 @@
+---
+title: "UFC in 2019"
+author: "Atilla Serkan Savas"
+date: "18 07 2020"
+output:
+  html_document: default
+  word_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE
+)
+```
+
+# UFC in 2019 
+
+As a casual UFC fan, I just wanted to visualize UFC in 2019. I just wanted to focus on one topic, maybe next time I will try to do something more general. I hope you like it, I would appreciate it if you upvote and give me some feedback.
+
+
+# Packages
+
+```{r}
+install.packages("ggcharts")
+install.packages("tidyverse")
+install.packages("lubridate")
+library(ggcharts)
+library(tidyverse)
+library(lubridate)
+```
+
+```{r}
+data = read.csv("C:\\Users\\atill\\Desktop\\datasets\\data.csv")
+
+```
+
+## Filtering the data
+
+```{r}
+data$date <- lubridate::as_date(data$date)
+data$year <- lubridate::year(data$date)
+data_2019 <- data %>%
+  filter(year == 2019)
+```
+
+# Charts
+
+```{r}
+
+lollipop_chart(data_2019, Referee , top_n = 15 ,point_color = "#d44446", line_color = "#a08070") 
+
+```
+Congrats Marc Goddard!
+
+
+```{r}
+lollipop_chart(data_2019, weight_class ,point_color = "#d44446", line_color = "#a08070") 
+```
+Lightweight at the top. Not surpising, it is the most popular division in UFC.
+
+```{r}
+lollipop_chart(data_2019, title_bout , top_n = 10 ,point_color = "#d44446", line_color = "#a08070") 
+
+```
+
+```{r}
+table(data_2019$title_bout)
+
+```
+
+Only 8 title fights took place in 2019.
+
+```{r}
+bar_chart(data_2019, title_bout, facet = weight_class) 
+
+```
+
+
+```{r}
+table(data_2019$title_bout,data_2019$weight_class)
+
+```
+
+
+
+
+
+
+```{r}
+total_stance <- c(data_2019$R_Stance,data_2019$B_Stance)
+total_stance <- as.data.frame(total_stance)
+total_stance$total_stance[total_stance$total_stance == ""] <- "open stance"
+total_stance %>%
+  lollipop_chart(total_stance  ,point_color = "#d44446", line_color = "#a08070") 
+```
+
+```{r}
+  lollipop_chart(data_2019, no_of_rounds  ,point_color = "#d44446", line_color = "#a08070") 
+
+```
+```{r}
+table(data_2019$Winner)
+```
+
